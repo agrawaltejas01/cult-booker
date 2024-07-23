@@ -20,12 +20,12 @@ async function bookCultClass() {
 
   console.log(classToBook);
 
-  let classBooked = false;
-  if (classToBook?.classFound) {
-    await bookClass(classToBook.classFound);
-    classBooked = true;
-  }
-  return { logs: classToBook?.logs, classBooked };
+  //   let classBooked = false;
+  //   if (classToBook?.classFound) {
+  //     await bookClass(classToBook.classFound);
+  //     classBooked = true;
+  //   }
+  //   return { logs: classToBook?.logs, classBooked };
 }
 
 async function getClasses() {
@@ -68,6 +68,16 @@ function chooseClass(data: any) {
   let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
   let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
 
+  //   let dateToMatch = "2024-07-22";
+  let logs = "";
+  let classFound = false;
+
+  let weekDay = new Date(dateToMatch).getDay();
+  if (weekDay == 1) {
+    logs = "Monday skipped";
+    return { classFound, logs };
+  }
+
   let classesOnDate = data.classByDateList.filter(
     (data: any) => data.id == dateToMatch
   );
@@ -78,8 +88,18 @@ function chooseClass(data: any) {
 
   classesOnDate = classesOnDate[0];
 
-  let logs = "";
-  let classFound = false;
+  let isClassBooked = false;
+  classesOnDate.classByTimeList.filter((classByTimeList: any) => {
+    if (isClassBooked) return;
+    isClassBooked = classByTimeList.classes.filter(
+      (classes: any) => classes.state == "BOOKED"
+    ).length;
+  });
+
+  if (isClassBooked) {
+    logs = "Class already booked";
+    return { classFound, logs };
+  }
 
   preferredClassTime.forEach((time) => {
     if (classFound) return;
