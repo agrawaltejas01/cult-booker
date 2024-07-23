@@ -66,9 +66,9 @@ async function getClasses() {
 
 function chooseClass(data: any) {
   let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
-  //   let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
+  let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
 
-  let dateToMatch = "2024-07-26";
+  //   let dateToMatch = "2024-07-26";
   let logs = "";
   let classFound = false;
 
