@@ -20,12 +20,12 @@ async function bookCultClass() {
 
   console.log(classToBook);
 
-  //   let classBooked = false;
-  //   if (classToBook?.classFound) {
-  //     await bookClass(classToBook.classFound);
-  //     classBooked = true;
-  //   }
-  //   return { logs: classToBook?.logs, classBooked };
+  let classBooked = false;
+  if (classToBook?.classFound) {
+    await bookClass(classToBook.classFound);
+    classBooked = true;
+  }
+  return { logs: classToBook?.logs, classBooked };
 }
 
 async function getClasses() {
@@ -66,9 +66,9 @@ async function getClasses() {
 
 function chooseClass(data: any) {
   let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
-  let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
+  //   let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
 
-  //   let dateToMatch = "2024-07-22";
+  let dateToMatch = "2024-07-26";
   let logs = "";
   let classFound = false;
 
