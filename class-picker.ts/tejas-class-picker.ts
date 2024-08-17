@@ -1,11 +1,13 @@
 const preferredClassTime = ["07:30:00", "08:30:00"];
 const preferredClasses = ["BURN", "HRX WORKOUT", "STRENGTH+"];
 
-export default function chooseClassForTejas(data: any) {
-  let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
-  let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
+export default function chooseClassForTejas(data: any, debugging = false) {
+  let dateToMatch;
 
-  // let dateToMatch = "2024-08-19";
+  let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
+  dateToMatch = date4DaysAhead.toISOString().split("T")[0];
+
+  if (debugging) dateToMatch = "2024-08-19";
 
   let logs = "";
   let classFound = false;
@@ -34,10 +36,11 @@ export default function chooseClassForTejas(data: any) {
     ).length;
   });
 
-  if (isClassBooked) {
-    logs = "Class already booked";
-    return { classFound, logs };
-  }
+  if (!debugging)
+    if (isClassBooked) {
+      logs = "Class already booked";
+      return { classFound, logs };
+    }
 
   preferredClassTime.forEach((time) => {
     if (classFound) return;
