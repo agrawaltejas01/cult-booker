@@ -3,32 +3,38 @@ import fs from "fs";
 
 import express from "express";
 import cors from "cors";
+import classPickerTs from "./class-picker.ts";
 
 const app = express();
 const port = 8080;
 
 app.use(cors());
 
-const preferredClassTime = ["07:30:00", "08:30:00"];
-const preferredClasses = ["HRX WORKOUT", "STRENGTH+"];
+const GCL_AW = `GCL.1720015325.Cj0KCQjw7ZO0BhDYARIsAFttkCgo7QojTnZj_nFmNrOvFHxNHR9nCnIhsX-p-WZlxvj9yUs8D47hfisaAiIcEALw_wcB`;
 
-let AuthCookie = `s%3ACFAPP%3A63faaeb2-08d6-417a-9df0-3893935b468b.Qy70kzMw0HeGMPtDe%2BfE5iXm95iNsvttjDNwMGwXyIQ`;
+interface ICreds {
+  authCookie: string;
+  deviceId: string;
+  gclAw?: string;
+  person: string;
+}
 
-async function bookCultClass() {
-  const classList = await getClasses();
-  let classToBook = chooseClass(classList);
+async function bookCultClass(creds: ICreds) {
+  const classList = await getClasses(creds);
+  let classToBook = classPickerTs(creds.person, classList);
 
   console.log(classToBook);
 
   let classBooked = false;
   if (classToBook?.classFound) {
-    await bookClass(classToBook.classFound);
+    console.log(classToBook.classFound);
+    await bookClass(creds, classToBook.classFound);
     classBooked = true;
   }
   return { logs: classToBook?.logs, classBooked };
 }
 
-async function getClasses() {
+async function getClasses(creds: ICreds) {
   const response = await axios.get("https://www.cult.fit/api/cult/classes", {
     params: {
       center: "6",
@@ -40,7 +46,9 @@ async function getClasses() {
       appversion: "7",
       browsername: "Web",
       "content-type": "application/json",
-      cookie: `at=${AuthCookie}; deviceId=s%3Af427fac4-8780-4c06-aedd-aa337d517a8e.dtofZq4ztc6yIgdcgZQ9L6Vgrji0LqNl33lGGiWks2g; _gcl_aw=GCL.1720015325.Cj0KCQjw7ZO0BhDYARIsAFttkCgo7QojTnZj_nFmNrOvFHxNHR9nCnIhsX-p-WZlxvj9yUs8D47hfisaAiIcEALw_wcB; `,
+      cookie: `at=${creds.authCookie}; deviceId=${creds.deviceId}; _gcl_aw=${
+        creds.gclAw || GCL_AW
+      }; `,
       "if-none-match": 'W/"69a3-zZxu5qN6FId3Q9YAz76vuKBLaZY"',
       osname: "browser",
       priority: "u=1, i",
@@ -64,70 +72,7 @@ async function getClasses() {
   return response.data;
 }
 
-function chooseClass(data: any) {
-  let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
-  let dateToMatch = date4DaysAhead.toISOString().split("T")[0];
-
-  //   let dateToMatch = "2024-07-26";
-  let logs = "";
-  let classFound = false;
-
-  let weekDay = new Date(dateToMatch).getDay();
-  if (weekDay == 1) {
-    logs = "Monday skipped";
-    return { classFound, logs };
-  }
-
-  let classesOnDate = data.classByDateList.filter(
-    (data: any) => data.id == dateToMatch
-  );
-  if (!classesOnDate.length || !classesOnDate[0].classByTimeList.length) {
-    console.log(`No Classes on ${dateToMatch} -> `);
-    return;
-  }
-
-  classesOnDate = classesOnDate[0];
-
-  let isClassBooked = false;
-  classesOnDate.classByTimeList.filter((classByTimeList: any) => {
-    if (isClassBooked) return;
-    isClassBooked = classByTimeList.classes.filter(
-      (classes: any) => classes.state == "BOOKED"
-    ).length;
-  });
-
-  if (isClassBooked) {
-    logs = "Class already booked";
-    return { classFound, logs };
-  }
-
-  preferredClassTime.forEach((time) => {
-    if (classFound) return;
-
-    let classesOnTime = classesOnDate.classByTimeList.filter(
-      (classes: any) => classes.id == time
-    );
-
-    if (!classesOnTime.length) {
-      logs += `No Classes on time ${time}\n`;
-      return;
-    }
-    classesOnTime = classesOnTime[0].classes;
-    classesOnTime.forEach((classes: any) => {
-      if (
-        preferredClasses.includes(classes.workoutName) &&
-        classes.state == "AVAILABLE"
-      ) {
-        classFound = classes;
-        return;
-      } else logs += `No preferred class type for time ${time}\n`;
-    });
-  });
-
-  return { classFound, logs };
-}
-
-async function bookClass(data: any) {
+async function bookClass(creds: ICreds, data: any) {
   let payload = {
     classId: data.id,
     productType: data.productType,
@@ -147,8 +92,9 @@ async function bookClass(data: any) {
           appversion: "7",
           browsername: "Web",
           "content-type": "application/json",
-          cookie:
-            "_gcl_au=1.1.32139539.1720015325; _fbp=fb.1.1720015325084.154548133943375642; G_ENABLED_IDPS=google; deviceId=s%3A2fe49434-5ba9-496d-bd76-1bef7689b794.CIiUcPLeQhFJ1lAOf4wjUV1oHSVD0xyMHaazVOIp6t0; _gcl_aw=GCL.1721457863.CjwKCAjwnei0BhB-EiwAA2xuBrhsLDXWAyWnpO8oKBn4299QDZMnUmVR_3_Bs_Y_5m_jmBNzn6Wa-RoCX_UQAvD_BwE; _gcl_gs=2.1.k1$i1721457862; _gid=GA1.2.88004728.1721457863; at=s%3ACFAPP%3A63faaeb2-08d6-417a-9df0-3893935b468b.Qy70kzMw0HeGMPtDe%2BfE5iXm95iNsvttjDNwMGwXyIQ; st=s%3ACFAPP%3A896a44fd-3536-4214-b4aa-34cedde2834e.KHSYgWWcTzXFmMawcav%2B71AB3OE60VPor495n339WWo; _gac_UA-92412423-1=1.1721457895.CjwKCAjwnei0BhB-EiwAA2xuBrhsLDXWAyWnpO8oKBn4299QDZMnUmVR_3_Bs_Y_5m_jmBNzn6Wa-RoCX_UQAvD_BwE; _ga=GA1.2.194755141.1720015325; _gat_UA-92412423-1=1; _ga_V0XZM8114H=GS1.1.1721457863.3.1.1721458092.60.0.0",
+          cookie: `at=${creds.authCookie}; deviceId=${
+            creds.deviceId
+          }; _gcl_aw=${creds.gclAw || GCL_AW};`,
           origin: "https://www.cult.fit",
           osname: "browser",
           priority: "u=1, i",
@@ -184,9 +130,29 @@ async function bookClass(data: any) {
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
-app.get("/", (req, res) => {
-  //   res.send("Hello World!");
-  bookCultClass()
+
+app.get("/tejas", (req, res) => {
+  let creds: ICreds = {
+    authCookie: `s%3ACFAPP%3A63faaeb2-08d6-417a-9df0-3893935b468b.Qy70kzMw0HeGMPtDe%2BfE5iXm95iNsvttjDNwMGwXyIQ`,
+    deviceId: `s%3Af427fac4-8780-4c06-aedd-aa337d517a8e.dtofZq4ztc6yIgdcgZQ9L6Vgrji0LqNl33lGGiWks2g`,
+    gclAw: `GCL.1720015325.Cj0KCQjw7ZO0BhDYARIsAFttkCgo7QojTnZj_nFmNrOvFHxNHR9nCnIhsX-p-WZlxvj9yUs8D47hfisaAiIcEALw_wcB`,
+    person: "Tejas",
+  };
+  bookCultClass(creds)
+    .then((result) => res.json({ ...result }))
+    .catch((e) => {
+      error: e;
+    });
+});
+app.get("/shubham", (req, res) => {
+  let creds: ICreds = {
+    authCookie: `s%3ACFAPP%3Afe66204c-fa63-40f0-8a8b-bc5d2c4e47cc.JFF2cyyv%2BHhyoZbGUH2yK8aGVUBcFcNDtM4hYwVAgIk`,
+    deviceId: `s%3A6f34a825-1102-4a60-b678-9b9ddd399e86.v60Fyi2z2E4cWtrkaBNorvZf1mnOfl0Vow%2BJYy8JYxo`,
+    gclAw: `GCL.1720015325.Cj0KCQjw7ZO0BhDYARIsAFttkCgo7QojTnZj_nFmNrOvFHxNHR9nCnIhsX-p-WZlxvj9yUs8D47hfisaAiIcEALw_wcB`,
+    person: "Shubham",
+  };
+
+  bookCultClass(creds)
     .then((result) => res.json({ ...result }))
     .catch((e) => {
       error: e;
