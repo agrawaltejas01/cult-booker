@@ -1,6 +1,3 @@
-const preferredClassTime = ["07:30:00", "08:30:00"];
-const preferredClasses = ["BURN", "HRX WORKOUT", "STRENGTH+"];
-
 export default function chooseClassForTejas(data: any, debugging = false) {
   let dateToMatch;
 
@@ -41,6 +38,9 @@ export default function chooseClassForTejas(data: any, debugging = false) {
       logs = "Class already booked";
       return { classFound, logs };
     }
+
+  const preferredClassTime = ["07:30:00", "08:30:00"];
+  const preferredClasses = ["BURN", "HRX WORKOUT", "STRENGTH+"];
 
   preferredClassTime.forEach((time) => {
     if (classFound) return;
