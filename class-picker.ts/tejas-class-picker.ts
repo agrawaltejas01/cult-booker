@@ -40,7 +40,7 @@ export default function chooseClassForTejas(data: any, debugging = false) {
     }
 
   const preferredClassTime = ["07:30:00", "08:30:00"];
-  const preferredClasses = ["BURN", "HRX WORKOUT", "STRENGTH+"];
+  const preferredClasses = ["BURN", "HRX WORKOUT", "ADIDAS STRENGTH+"];
 
   preferredClassTime.forEach((time) => {
     if (classFound) return;

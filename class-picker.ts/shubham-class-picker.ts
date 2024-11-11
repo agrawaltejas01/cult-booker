@@ -33,8 +33,8 @@ export default function chooseClassForShubham(data: any, debugging = false) {
       return { classFound, logs };
     }
 
-  const preferredClassTime = ["06:30:00", "07:30:00"];
-  const preferredClasses = ["HRX WORKOUT", "STRENGTH+", "BURN"];
+  const preferredClassTime = ["07:30:00", "08:30:00"];
+  const preferredClasses = ["HRX WORKOUT", "ADIDAS STRENGTH+", "BURN"];
   preferredClassTime.forEach((time) => {
     if (classFound) return;
 
