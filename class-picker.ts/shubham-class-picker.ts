@@ -1,3 +1,5 @@
+import { times, workouts } from "../constants";
+
 export default function chooseClassForShubham(data: any, debugging = false) {
   let dateToMatch;
 
@@ -33,8 +35,13 @@ export default function chooseClassForShubham(data: any, debugging = false) {
       return { classFound, logs };
     }
 
-  const preferredClassTime = ["07:30:00", "08:30:00"];
-  const preferredClasses = ["HRX WORKOUT", "ADIDAS STRENGTH+", "BURN"];
+  const preferredClassTime = [times[630], times[730], times[830]];
+  const preferredClasses = [
+    workouts.BOXING,
+    workouts.HRX,
+    workouts.STRENGTH,
+    workouts.BURN,
+  ];
   preferredClassTime.forEach((time) => {
     if (classFound) return;
 

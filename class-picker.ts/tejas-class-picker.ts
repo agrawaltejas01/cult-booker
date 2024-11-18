@@ -1,3 +1,5 @@
+import { times, workouts } from "../constants";
+
 export default function chooseClassForTejas(data: any, debugging = false) {
   let dateToMatch;
 
@@ -39,8 +41,13 @@ export default function chooseClassForTejas(data: any, debugging = false) {
       return { classFound, logs };
     }
 
-  const preferredClassTime = ["07:30:00", "08:30:00"];
-  const preferredClasses = ["BURN", "HRX WORKOUT", "ADIDAS STRENGTH+"];
+  const preferredClassTime = [times[730], times[830]];
+  const preferredClasses = [
+    workouts.BURN,
+    workouts.BOXING,
+    workouts.HRX,
+    workouts.STRENGTH,
+  ];
 
   preferredClassTime.forEach((time) => {
     if (classFound) return;
