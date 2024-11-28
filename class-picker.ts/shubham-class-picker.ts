@@ -35,7 +35,7 @@ export default function chooseClassForShubham(data: any, debugging = false) {
       return { classFound, logs };
     }
 
-  const preferredClassTime = [times[630], times[730], times[830]];
+  const preferredClassTime = [times[730], times[830]];
   const preferredClasses = [
     workouts.BOXING,
     workouts.HRX,
