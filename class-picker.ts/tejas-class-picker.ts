@@ -41,8 +41,8 @@ export default function chooseClassForTejas(data: any, debugging = false) {
       return { classFound, logs };
     }
 
-  const preferredClassTime = [times[730], times[830]];
-  const preferredClasses = [
+  let preferredClassTime = [times[730], times[830]];
+  let preferredClasses = [
     workouts.BURN,
     workouts.BOXING,
     workouts.HRX,

@@ -35,12 +35,12 @@ export default function chooseClassForShubham(data: any, debugging = false) {
       return { classFound, logs };
     }
 
-  const preferredClassTime = [times[730], times[830]];
-  const preferredClasses = [
+  let preferredClassTime = [times[730], times[830]];
+  let preferredClasses = [
     workouts.BOXING,
     workouts.HRX,
     workouts.STRENGTH,
-    workouts.BURN,
+    // workouts.BURN,
   ];
   preferredClassTime.forEach((time) => {
     if (classFound) return;
