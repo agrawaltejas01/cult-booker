@@ -42,12 +42,7 @@ export default function chooseClassForTejas(data: any, debugging = false) {
     }
 
   let preferredClassTime = [times[730], times[830]];
-  let preferredClasses = [
-    workouts.BURN,
-    workouts.BOXING,
-    workouts.HRX,
-    workouts.STRENGTH,
-  ];
+  let preferredClasses = [workouts.BURN, workouts.HRX, workouts.STRENGTH];
 
   preferredClassTime.forEach((time) => {
     if (classFound) return;
