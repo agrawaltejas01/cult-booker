@@ -133,9 +133,9 @@ app.listen(port, () => {
 
 app.get("/tejas", (req, res) => {
   let creds: ICreds = {
-    authCookie: `s%3ACFAPP%3A63faaeb2-08d6-417a-9df0-3893935b468b.Qy70kzMw0HeGMPtDe%2BfE5iXm95iNsvttjDNwMGwXyIQ`,
-    deviceId: `s%3Af427fac4-8780-4c06-aedd-aa337d517a8e.dtofZq4ztc6yIgdcgZQ9L6Vgrji0LqNl33lGGiWks2g`,
-    gclAw: `GCL.1720015325.Cj0KCQjw7ZO0BhDYARIsAFttkCgo7QojTnZj_nFmNrOvFHxNHR9nCnIhsX-p-WZlxvj9yUs8D47hfisaAiIcEALw_wcB`,
+    authCookie: `s%3ACFAPP%3A59d015b1-a15f-4fd7-b032-6b701b5ec540.d1yWrTiRhyF2iVcgn162QBYK1fNqaqfKwxsOro9dmeU`,
+    deviceId: `s%3A60971204-f270-41b3-ab39-2ef4d2a8501c.Je%2FTFUEdG2kv33m8hMPUWmY9OSiKAByW3eRtTXdrdRI`,
+    gclAw: `GCL.1741452991.Cj0KCQiA8q--BhDiARIsAP9tKI0Vf2iqQp4WkcoXKatF7GdBT5GxlpOmDqD_zwvmb9VNOwjZULW41hIaAv1gEALw_wcB`,
     person: "Tejas",
   };
   bookCultClass(creds)
@@ -146,9 +146,9 @@ app.get("/tejas", (req, res) => {
 });
 app.get("/shubham", (req, res) => {
   let creds: ICreds = {
-    authCookie: `s%3ACFAPP%3Afe66204c-fa63-40f0-8a8b-bc5d2c4e47cc.JFF2cyyv%2BHhyoZbGUH2yK8aGVUBcFcNDtM4hYwVAgIk`,
-    deviceId: `s%3A6f34a825-1102-4a60-b678-9b9ddd399e86.v60Fyi2z2E4cWtrkaBNorvZf1mnOfl0Vow%2BJYy8JYxo`,
-    gclAw: `GCL.1720015325.Cj0KCQjw7ZO0BhDYARIsAFttkCgo7QojTnZj_nFmNrOvFHxNHR9nCnIhsX-p-WZlxvj9yUs8D47hfisaAiIcEALw_wcB`,
+    authCookie: `s%3ACFAPP%3A59d015b1-a15f-4fd7-b032-6b701b5ec540.d1yWrTiRhyF2iVcgn162QBYK1fNqaqfKwxsOro9dmeU`,
+    deviceId: `s%3A7c627931-13ea-4e61-b98e-79dc54dbbc31.Yz08pbyM0%2FWAseC0jRXGCHGitgDZihnSp4Kuc2NVI3w`,
+    gclAw: `GCL.1741452991.Cj0KCQiA8q--BhDiARIsAP9tKI0Vf2iqQp4WkcoXKatF7GdBT5GxlpOmDqD_zwvmb9VNOwjZULW41hIaAv1gEALw_wcB`,
     person: "Shubham",
   };
 

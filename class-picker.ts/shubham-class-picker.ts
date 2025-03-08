@@ -6,7 +6,7 @@ export default function chooseClassForShubham(data: any, debugging = false) {
   let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
   dateToMatch = date4DaysAhead.toISOString().split("T")[0];
 
-  if (debugging) dateToMatch = "2024-08-19";
+  if (debugging) dateToMatch = "2025-03-09";
 
   let logs = "";
   let classFound = false;
@@ -37,10 +37,10 @@ export default function chooseClassForShubham(data: any, debugging = false) {
 
   let preferredClassTime = [times[730], times[830]];
   let preferredClasses = [
-    workouts.BOXING,
+    // workouts.BOXING,
     workouts.HRX,
     workouts.STRENGTH,
-    // workouts.BURN,
+    workouts.BURN,
   ];
   preferredClassTime.forEach((time) => {
     if (classFound) return;

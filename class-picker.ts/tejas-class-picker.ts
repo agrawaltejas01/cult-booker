@@ -6,7 +6,7 @@ export default function chooseClassForTejas(data: any, debugging = false) {
   let date4DaysAhead = new Date(new Date().setDate(new Date().getDate() + 4));
   dateToMatch = date4DaysAhead.toISOString().split("T")[0];
 
-  if (debugging) dateToMatch = "2024-08-19";
+  if (debugging) dateToMatch = "2025-03-12";
 
   let logs = "";
   let classFound = false;
