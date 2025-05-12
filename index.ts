@@ -133,8 +133,8 @@ app.listen(port, () => {
 
 app.get("/tejas", (req, res) => {
   let creds: ICreds = {
-    authCookie: `s%3ACFAPP%3A236aa130-2b17-4839-bcdd-56e48e37a425.74kK2CouyZK8KznNxQ0kOFqyFh2eJlYUAzlD305d3Rc`,
-    deviceId: `s%3A697be014-aad2-49d4-a061-74b23c33e5d4.%2B5ilnqS6qMQqAHPOJyoqQlKtubfEHUbU1u9OSSV2WYg`,
+    authCookie: `s%3ACFAPP%3Ae8fef51a-5b41-421f-bebb-148d44f7ce49.jg7wD%2B4LgKsXQuOj8sfTuCq6tQTJbpBgygNS7mz65xY`,
+    deviceId: `s%3A60971204-f270-41b3-ab39-2ef4d2a8501c.Je%2FTFUEdG2kv33m8hMPUWmY9OSiKAByW3eRtTXdrdRI`,
     gclAw: `GCL.1741452991.Cj0KCQiA8q--BhDiARIsAP9tKI0Vf2iqQp4WkcoXKatF7GdBT5GxlpOmDqD_zwvmb9VNOwjZULW41hIaAv1gEALw_wcB`,
     person: "Tejas",
   };
@@ -146,8 +146,8 @@ app.get("/tejas", (req, res) => {
 });
 app.get("/shubham", (req, res) => {
   let creds: ICreds = {
-    authCookie: `s%3ACFAPP%3A99e105b7-622c-4129-b1d4-02ce28cfde62.SFB8H0tGMLpdkDxSE4GRRyvIslltd78lz%2FlMMs44dwI`,
-    deviceId: `s%3Ab0b24da3-adeb-4969-88a2-df7a770420e7.dXRCokyaax3c08LykhFyVIOlwAErVbEhkaKNvUcgoLw`,
+    authCookie: `s%3ACFAPP%3Afade9c8f-977a-4a37-8608-d844826ca4f6.HYCN%2BoeYXnbh9h00AizAsGLmogUQkBh4x1Wgaz1EBeg`,
+    deviceId: `s%3A94eb2e1f-6821-46db-a89a-efc243e59683.w6FILOcLYO6yCgqgRzaC4MzyojsHWFeIE36c4jVHExw`,
     gclAw: `GCL.1741452991.Cj0KCQiA8q--BhDiARIsAP9tKI0Vf2iqQp4WkcoXKatF7GdBT5GxlpOmDqD_zwvmb9VNOwjZULW41hIaAv1gEALw_wcB`,
     person: "Shubham",
   };
